@@ -1,0 +1,39 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Python for Everybody"
+  subtitle: "Exploring Data Using Python 3"
+  author: "Charles R. Severance"
+  chapters:
+    - index.qmd
+    - py4e-quarto/A0-preface.qmd
+    - py4e-quarto/01-intro.qmd
+    - py4e-quarto/02-variables.qmd
+    - py4e-quarto/03-conditional.qmd
+    - py4e-quarto/04-functions.qmd
+    - py4e-quarto/05-iterations.qmd
+    - py4e-quarto/06-strings.qmd
+    - py4e-quarto/07-files.qmd
+    - py4e-quarto/08-lists.qmd
+    - py4e-quarto/09-dictionaries.qmd
+    - py4e-quarto/10-tuples.qmd
+    - py4e-quarto/11-regex.qmd
+    - py4e-quarto/12-network.qmd
+    - py4e-quarto/13-web.qmd
+    - py4e-quarto/14-objects.qmd
+    - py4e-quarto/15-database.qmd
+    - py4e-quarto/16-viz.qmd
+    # --- my-content chapters (managed by tools/new_chapter.py) ---
+    # --- end my-content chapters ---
+  appendices:
+    - py4e-quarto/AA-contrib.qmd
+    - py4e-quarto/AB-copyright.qmd
+    - for-editors.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true

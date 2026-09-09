@@ -1,0 +1,155 @@
+# For instructors and editors {.unnumbered}
+
+This appendix is for people who maintain this edition of the book, not for
+students. It records how the repository is organised, how the book is built,
+how to pull in updates from the original author, and what the license allows.
+
+## Where things are
+
+The repository is a fork of Dr. Chuck Severance's
+[csev/py4e](https://github.com/csev/py4e) repository, which holds the
+py4e.com website and the master source of the book. Its structure is left
+untouched so that upstream updates merge cleanly. Everything specific to this
+edition lives in one folder, `yr-materials/`:
+
+| Path | What it is |
+|------|------------|
+| `_quarto.yml`, `index.qmd` | The Quarto book project. Chapters are listed here. |
+| `py4e-quarto/*.qmd` | **Generated** chapters converted from upstream `book3/*.mkd`. Do not hand-edit; see below. |
+| `py4e-quarto/images/` | Figures copied from upstream by the converter. |
+| `my-content/chapters/` | Chapters written for this course. Safe to edit freely. |
+| `my-content/notebooks/`, `my-content/exercises/` | Notebooks and exercise sets for students. |
+| `for-editors.qmd` | This appendix. |
+| `tools/` | Scripts for converting, building, syncing, and scaffolding (listed below). |
+| `../.claude/skills/` | Claude Code skills that wrap the tools. |
+
+Reusable material in the upstream part of the repository:
+
+| Upstream path | Contents |
+|---------------|----------|
+| `book3/*.mkd` | Book text, one Pandoc-markdown file per chapter (the master source). |
+| `code3/` | Every example program and data file the book refers to. |
+| `images/`, `book3/figs2/` | Figures as svg, png, and eps. |
+| `html3/` | Pre-built HTML of each chapter, for reading only. |
+| `lectures3/` | Lecture slides as pptx and pdf. |
+| `assn/` | Assignment descriptions used on py4e.com. |
+| `lessons.json` | Mapping of chapters to videos and assignments on py4e.com. |
+
+## Git remotes
+
+| Remote | URL | Use |
+|--------|-----|-----|
+| `origin` | https://github.com/y-rosenthal/py4e | Our fork. Push work here. |
+| `upstream` | https://github.com/csev/py4e | Dr. Chuck's repository. Pull updates from here. |
+
+Work happens directly on `master`. Because our changes are confined to
+`yr-materials/`, `.gitignore`, `CLAUDE.md`, and `.claude/`, merging upstream
+never conflicts with our content.
+
+The clone is about 2 GB because upstream tracks slides and media. The
+repository lives inside Dropbox; Dropbox and Git can corrupt each other while
+both are writing to `.git/`. Either keep the repository out of Dropbox or tell
+Dropbox to skip the Git internals:
+
+```bash
+attr -s com.dropbox.ignored -V 1 .git
+```
+
+## How the generated chapters are made
+
+`tools/mkd2qmd.py` reads each upstream chapter in `book3/` and writes a clean
+`.qmd` into `py4e-quarto/`. It:
+
+- strips the LaTeX `\index{}` entries;
+- turns `~~~~ {.python .trinket}` fences into standard ```` ```python ```` fences;
+- replaces `\VerbatimInput{../code3/foo.py}` with the file's contents plus a
+  comment giving the file's URL on py4e.com;
+- replaces `\begin{trinketfiles}` blocks with a callout that links the data
+  files an example needs;
+- converts figures to `![Caption](images/foo.svg){height=...}` and copies the
+  image;
+- turns figure `\label{}` and `\ref{}` into Quarto cross references;
+- converts setext headings to ATX (`#`) headings;
+- adds an HTML comment with source and license attribution at the top.
+
+Re-run it whenever upstream changes:
+
+```bash
+python3 yr-materials/tools/mkd2qmd.py          # all chapters
+python3 yr-materials/tools/mkd2qmd.py 04 05    # just chapters 04 and 05
+```
+
+If a generated chapter needs course-specific edits, do not edit it in place;
+copy the section you need into `my-content/chapters/` (see
+`tools/extract_section.py`) and edit the copy. Otherwise the next regeneration
+will silently discard your edits.
+
+## Building and previewing
+
+```bash
+cd yr-materials
+quarto preview            # live-reloading local server
+quarto render             # writes the site to yr-materials/_book/
+```
+
+`tools/build.sh` regenerates the chapters, runs a few sanity checks (balanced
+code fences, exactly one level-one heading per chapter), and renders.
+Build output is ignored by Git.
+
+## Pulling updates from upstream
+
+```bash
+git fetch upstream
+git merge upstream/master
+python3 yr-materials/tools/mkd2qmd.py
+git push origin master
+```
+
+`tools/sync_upstream.sh` does all of this and prints which chapters changed.
+
+## Adding a chapter of our own
+
+```bash
+python3 yr-materials/tools/new_chapter.py invoices "Working with invoice data"
+```
+
+This creates `my-content/chapters/invoices.qmd` with the standard header and
+inserts it into `_quarto.yml` between the `my-content chapters` markers. Move
+the line within `_quarto.yml` to place the chapter where you want it in the
+reading order.
+
+To lift a section from a py4e chapter as a starting point:
+
+```bash
+python3 yr-materials/tools/extract_section.py 05 "The while statement" \
+        --out my-content/chapters/while-loops.qmd
+```
+
+## Course design notes
+
+The course follows Allen Downey's *Think Python* (3rd edition) for its early
+chapters and uses this book as a supplement. Guidelines for new material:
+
+- Students are business majors. Prefer examples about sales, invoices,
+  customers, budgets, and spreadsheets over geometry or number theory.
+- Loops are taught before conditionals, following *Think Python*. Chapter 5
+  (Iteration) of this book fits that stage well: it covers `while`, `for`,
+  and the counting, summing, and max/min patterns without any mathematics
+  beyond arithmetic.
+- Avoid turtle-graphics exercises that require angle calculations.
+
+## License
+
+*Python for Everybody* is licensed under Creative Commons
+Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0). The
+author's *Copyright Detail* appendix grants in advance permission to print
+course packs and invites remixing for teaching. Our obligations:
+
+1. Credit Charles R. Severance and py4e.com. Every generated chapter carries
+   an attribution comment; keep it, or an equivalent visible note, in
+   anything republished.
+2. Use non-commercially, or within the permissions in *Copyright Detail*.
+3. Release derivative material under the same CC BY-NC-SA license.
+
+*Think Python* (3rd edition) is CC BY-NC-SA 4.0, so material from both books
+can be combined in one work under BY-NC-SA.

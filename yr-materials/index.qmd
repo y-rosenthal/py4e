@@ -1,0 +1,12 @@
+# About this book {.unnumbered}
+
+This is a reformatted edition of *Python for Everybody: Exploring Data Using
+Python 3* by Charles R. Severance, prepared for use in a business-school
+introductory Python course. The original book, its videos, and its
+autograded exercises are free at <https://www.py4e.com/>.
+
+Some chapters and exercises have been added or adapted for this course.
+Where a chapter comes from the original book, it is reproduced under the
+book's Creative Commons
+[Attribution-NonCommercial-ShareAlike 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+license; see the *Copyright Detail* appendix.

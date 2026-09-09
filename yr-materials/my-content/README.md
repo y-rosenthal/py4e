@@ -1,12 +1,10 @@
 # my-content
 
-Put your own course material here (Quarto chapters, notebooks, slides,
-exercises). Nothing in this folder comes from upstream py4e, so `git pull
-upstream master` will never touch it.
+Material written for this course. Nothing here comes from upstream py4e, so
+`git merge upstream/master` never touches it.
 
-Suggested layout:
+    chapters/     .qmd chapters (create with tools/new_chapter.py)
+    notebooks/    .ipynb files handed to students
+    exercises/    exercise sets, business-flavoured where possible
 
-    my-content/
-      chapters/     # your own .qmd chapters, or remixed py4e chapters
-      notebooks/    # .ipynb files for students
-      exercises/    # business-flavoured exercises replacing the mathy ones
+See `../for-editors.qmd` for guidelines.
