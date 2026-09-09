@@ -1,0 +1,15 @@
+# About this edition {.unnumbered}
+
+This is an unofficial Quarto rendering of *Python for Everybody: Exploring
+Data Using Python 3* by Charles R. Severance. The official book, videos,
+autograded exercises, and code live at <https://www.py4e.com/>.
+
+The chapter files in this folder are generated from the book's master
+Markdown sources (`book3/*.mkd` in <https://github.com/csev/py4e>) by the
+script `yr-materials/tools/mkd2qmd.py`. Re-run that script after pulling
+upstream changes to refresh them.
+
+The book is licensed under the Creative Commons
+[Attribution-NonCommercial-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+license. See the *Copyright Detail* appendix for the author's notes on
+permitted educational uses.

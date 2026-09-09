@@ -41,3 +41,10 @@ cron.txt
 book3/translation/book-tl/x.pdf
 tests/vendor
 whisper-batch.log
+
+# yr-materials (local build outputs)
+yr-materials/py4e-quarto/_book
+yr-materials/py4e-quarto/.quarto
+yr-materials/**/_book
+yr-materials/**/.quarto
+yr-materials/**/*_files

@@ -1,0 +1,35 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Python for Everybody (Quarto edition)"
+  author: "Charles R. Severance"
+  chapters:
+    - index.qmd
+    - A0-preface.qmd
+    - 01-intro.qmd
+    - 02-variables.qmd
+    - 03-conditional.qmd
+    - 04-functions.qmd
+    - 05-iterations.qmd
+    - 06-strings.qmd
+    - 07-files.qmd
+    - 08-lists.qmd
+    - 09-dictionaries.qmd
+    - 10-tuples.qmd
+    - 11-regex.qmd
+    - 12-network.qmd
+    - 13-web.qmd
+    - 14-objects.qmd
+    - 15-database.qmd
+    - 16-viz.qmd
+  appendices:
+    - AA-contrib.qmd
+    - AB-copyright.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-copy: true
